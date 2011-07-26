@@ -230,6 +230,10 @@ extern NSString* const RKObjectMappingNestingAttributeKeyName;
     }
     RKLogTrace(@"Mapping attribute value keyPath '%@' to '%@'", attributeMapping.sourceKeyPath, attributeMapping.destinationKeyPath);
     
+    if ([[attributeMapping sourceKeyPath] isEqualToString:@"imageData"]) {
+        value = @"Im a bunch of image data image data image data";
+    }
+    
     // Inspect the property type to handle any value transformations
     Class type = [[RKObjectPropertyInspector sharedInspector] typeForProperty:attributeMapping.destinationKeyPath ofClass:[self.destinationObject class]];
     if (type && NO == [[value class] isSubclassOfClass:type]) {
