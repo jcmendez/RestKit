@@ -67,7 +67,8 @@ static NSString* const RKManagedObjectStoreThreadDictionaryEntityCacheKey = @"RK
 		_pathToStoreFile = [[nilOrDirectoryPath stringByAppendingPathComponent:_storeFilename] retain];
 		
         if (nilOrManagedObjectModel == nil) {
-            nilOrManagedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+            // NOTE: allBundles permits Core Data setup in unit tests
+			nilOrManagedObjectModel = [NSManagedObjectModel mergedModelFromBundles:[NSBundle allBundles]];
         }
 		_managedObjectModel = [[nilOrManagedObjectModel retain] copy];
 		
@@ -207,8 +208,7 @@ static NSString* const RKManagedObjectStoreThreadDictionaryEntityCacheKey = @"RK
 	if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:options error:&error]) {
 		if (self.delegate != nil && [self.delegate respondsToSelector:@selector(managedObjectStore:didFailToCreatePersistentStoreCoordinatorWithError:)]) {
 			[self.delegate managedObjectStore:self didFailToCreatePersistentStoreCoordinatorWithError:error];
-		}
-		else {
+		} else {
 			NSAssert(NO, @"Managed object store failed to create persistent store coordinator: %@", error);
 		}
     }
@@ -253,11 +253,11 @@ static NSString* const RKManagedObjectStoreThreadDictionaryEntityCacheKey = @"RK
 	NSMutableDictionary* threadDictionary = [[NSThread currentThread] threadDictionary];
 	NSManagedObjectContext* backgroundThreadContext = [threadDictionary objectForKey:RKManagedObjectStoreThreadDictionaryContextKey];
 	if (!backgroundThreadContext) {
-		backgroundThreadContext = [self newManagedObjectContext];					
-		[threadDictionary setObject:backgroundThreadContext forKey:RKManagedObjectStoreThreadDictionaryContextKey];			
+		backgroundThreadContext = [self newManagedObjectContext];
+		[threadDictionary setObject:backgroundThreadContext forKey:RKManagedObjectStoreThreadDictionaryContextKey];
 		[backgroundThreadContext release];
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self 
+
+		[[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(mergeChanges:)
 													 name:NSManagedObjectContextDidSaveNotification
 												   object:backgroundThreadContext];
@@ -268,8 +268,8 @@ static NSString* const RKManagedObjectStoreThreadDictionaryEntityCacheKey = @"RK
 - (void)mergeChangesOnMainThreadWithNotification:(NSNotification*)notification {
 	assert([NSThread isMainThread]);
 	[self.managedObjectContext performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:)
-											withObject:notification
-										 waitUntilDone:YES];
+												withObject:notification
+											 waitUntilDone:YES];
 }
 
 - (void)mergeChanges:(NSNotification *)notification {

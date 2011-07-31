@@ -178,7 +178,9 @@
 		if ([_params respondsToSelector:@selector(HTTPHeaderValueForContentLength)]) {
 			[_URLRequest setValue:[NSString stringWithFormat:@"%d", [_params HTTPHeaderValueForContentLength]] forHTTPHeaderField:@"Content-Length"];
 		}
-	}
+	} else {
+        [_URLRequest setValue:@"0" forHTTPHeaderField:@"Content-Length"];
+    }
     
     // Add authentication headers so we don't have to deal with an extra cycle for each message requiring basic auth.
     if (self.forceBasicAuthentication) {        
@@ -517,6 +519,21 @@
 		resourcePath = url.resourcePath;
 	}
 	return resourcePath;
+}
+
+- (void)setURL:(NSURL *)URL {
+    [URL retain];
+    [_URL release];
+    _URL = URL;
+    _URLRequest.URL = URL;
+}
+
+- (void)setResourcePath:(NSString *)resourcePath {
+    if ([self.URL isKindOfClass:[RKURL class]]) {
+        self.URL = [RKURL URLWithBaseURLString:[(RKURL*)self.URL baseURLString] resourcePath:resourcePath];
+	} else {
+        [NSException raise:NSInvalidArgumentException format:@"Resource path can only be mutated when self.URL is an RKURL instance"];
+    }
 }
 
 - (BOOL)wasSentToResourcePath:(NSString*)resourcePath {
