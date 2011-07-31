@@ -70,7 +70,7 @@ static NSString* const RKManagedObjectStoreThreadDictionaryEntityCacheKey = @"RK
             // NOTE: allBundles permits Core Data setup in unit tests
 			nilOrManagedObjectModel = [NSManagedObjectModel mergedModelFromBundles:[NSBundle allBundles]];
         }
-		_managedObjectModel = [[nilOrManagedObjectModel retain] copy];
+		_managedObjectModel = [nilOrManagedObjectModel retain];
 		
         if (nilOrNameOfSeedDatabaseInMainBundle) {
             [self createStoreIfNecessaryUsingSeedDatabase:nilOrNameOfSeedDatabaseInMainBundle];
@@ -198,7 +198,7 @@ static NSString* const RKManagedObjectStoreThreadDictionaryEntityCacheKey = @"RK
 	NSURL *storeUrl = [NSURL fileURLWithPath:self.pathToStoreFile];
 	
 	NSError *error;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[_managedObjectModel copy]];
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
 	
 	// Allow inferred migration from the original version of the application.
 	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
