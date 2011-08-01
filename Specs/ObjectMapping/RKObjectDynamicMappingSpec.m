@@ -1,5 +1,5 @@
 //
-//  RKObjectPolymorphicMappingSpec.m
+//  RKObjectDynamicMappingSpec.m
 //  RestKit
 //
 //  Created by Blake Watters on 7/28/11.
@@ -7,25 +7,25 @@
 //
 
 #import "RKSpecEnvironment.h"
-#import "RKObjectPolymorphicMapping.h"
-#import "RKPolymorphicMappingModels.h"
+#import "RKObjectDynamicMapping.h"
+#import "RKDynamicMappingModels.h"
 
-@interface RKObjectPolymorphicMappingSpec : RKSpec <RKObjectPolymorphicMappingDelegate>
+@interface RKObjectDynamicMappingSpec : RKSpec <RKObjectDynamicMappingDelegate>
 
 @end
 
-@implementation RKObjectPolymorphicMappingSpec
+@implementation RKObjectDynamicMappingSpec
 
 - (void)itShouldPickTheAppropriateMappingBasedOnAnAttributeValue {
-    RKObjectPolymorphicMapping* dynamicMapping = [RKObjectPolymorphicMapping polymorphicMapping];
+    RKObjectDynamicMapping* dynamicMapping = [RKObjectDynamicMapping dynamicMapping];
     RKObjectMapping* girlMapping = [RKObjectMapping mappingForClass:[Girl class] block:^(RKObjectMapping* mapping) {
         [mapping mapAttributes:@"name", nil];
     }];
     RKObjectMapping* boyMapping = [RKObjectMapping mappingForClass:[Boy class] block:^(RKObjectMapping* mapping) {
         [mapping mapAttributes:@"name", nil];
     }];
-    [dynamicMapping setObjectMapping:girlMapping whenValueOfKey:@"type" isEqualTo:@"Girl"];
-    [dynamicMapping setObjectMapping:boyMapping whenValueOfKey:@"type" isEqualTo:@"Boy"];
+    [dynamicMapping setObjectMapping:girlMapping whenValueOfKeyPath:@"type" isEqualTo:@"Girl"];
+    [dynamicMapping setObjectMapping:boyMapping whenValueOfKeyPath:@"type" isEqualTo:@"Boy"];
     RKObjectMapping* mapping = [dynamicMapping objectMappingForDictionary:RKSpecParseFixture(@"girl.json")];
     assertThat(mapping, is(notNilValue()));
     assertThat(NSStringFromClass(mapping.objectClass), is(equalTo(@"Girl")));
@@ -35,15 +35,15 @@
 }
 
 - (void)itShouldMatchOnAnNSNumberAttributeValue {
-    RKObjectPolymorphicMapping* dynamicMapping = [RKObjectPolymorphicMapping polymorphicMapping];
+    RKObjectDynamicMapping* dynamicMapping = [RKObjectDynamicMapping dynamicMapping];
     RKObjectMapping* girlMapping = [RKObjectMapping mappingForClass:[Girl class] block:^(RKObjectMapping* mapping) {
         [mapping mapAttributes:@"name", nil];
     }];
     RKObjectMapping* boyMapping = [RKObjectMapping mappingForClass:[Boy class] block:^(RKObjectMapping* mapping) {
         [mapping mapAttributes:@"name", nil];
     }];
-    [dynamicMapping setObjectMapping:girlMapping whenValueOfKey:@"numeric_type" isEqualTo:[NSNumber numberWithInt:0]];
-    [dynamicMapping setObjectMapping:boyMapping whenValueOfKey:@"numeric_type" isEqualTo:[NSNumber numberWithInt:1]];
+    [dynamicMapping setObjectMapping:girlMapping whenValueOfKeyPath:@"numeric_type" isEqualTo:[NSNumber numberWithInt:0]];
+    [dynamicMapping setObjectMapping:boyMapping whenValueOfKeyPath:@"numeric_type" isEqualTo:[NSNumber numberWithInt:1]];
     RKObjectMapping* mapping = [dynamicMapping objectMappingForDictionary:RKSpecParseFixture(@"girl.json")];
     assertThat(mapping, is(notNilValue()));
     assertThat(NSStringFromClass(mapping.objectClass), is(equalTo(@"Girl")));
@@ -53,7 +53,7 @@
 }
 
 - (void)itShouldPickTheAppropriateMappingBasedOnDelegateCallback {
-    RKObjectPolymorphicMapping* dynamicMapping = [RKObjectPolymorphicMapping polymorphicMapping];
+    RKObjectDynamicMapping* dynamicMapping = [RKObjectDynamicMapping dynamicMapping];
     dynamicMapping.delegate = self;
     RKObjectMapping* mapping = [dynamicMapping objectMappingForDictionary:RKSpecParseFixture(@"girl.json")];
     assertThat(mapping, is(notNilValue()));
@@ -64,8 +64,8 @@
 }
 
 - (void)itShouldPickTheAppropriateMappingBasedOnBlockDelegateCallback {
-    RKObjectPolymorphicMapping* dynamicMapping = [RKObjectPolymorphicMapping polymorphicMapping];
-    dynamicMapping.delegateBlock = ^ RKObjectMapping* (id data) {
+    RKObjectDynamicMapping* dynamicMapping = [RKObjectDynamicMapping dynamicMapping];
+    dynamicMapping.objectMappingForDataBlock = ^ RKObjectMapping* (id data) {
         if ([[data valueForKey:@"type"] isEqualToString:@"Girl"]) {
             return [RKObjectMapping mappingForClass:[Girl class] block:^(RKObjectMapping* mapping) {
                 [mapping mapAttributes:@"name", nil];
@@ -88,7 +88,7 @@
 
 - (void)itShouldFailAnAssertionWhenInvokedWithSomethingOtherThanADictionary {
     NSException* exception = nil;
-    RKObjectPolymorphicMapping* dynamicMapping = [RKObjectPolymorphicMapping polymorphicMapping];
+    RKObjectDynamicMapping* dynamicMapping = [RKObjectDynamicMapping dynamicMapping];
     @try {
         [dynamicMapping objectMappingForDictionary:(NSDictionary*)[NSArray array]];
     }
