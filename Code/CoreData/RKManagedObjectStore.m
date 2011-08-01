@@ -70,18 +70,18 @@ static NSString* const RKManagedObjectStoreThreadDictionaryEntityCacheKey = @"RK
             // NOTE: allBundles permits Core Data setup in unit tests
 			nilOrManagedObjectModel = [NSManagedObjectModel mergedModelFromBundles:[NSBundle allBundles]];
         }
-		_managedObjectModel = [nilOrManagedObjectModel retain];
+		_managedObjectModel = [[nilOrManagedObjectModel retain] copy];
 		
         if (nilOrNameOfSeedDatabaseInMainBundle) {
             [self createStoreIfNecessaryUsingSeedDatabase:nilOrNameOfSeedDatabaseInMainBundle];
         }
-        NSAttributeDescription *syncAttribute = [[NSAttributeDescription alloc] init];
-        [syncAttribute setName:@"_rkManagedObjectSyncStatus"];
-        [syncAttribute setAttributeType:NSInteger16AttributeType];
-        [syncAttribute setOptional:NO];
-        [syncAttribute setDefaultValue:[NSNumber numberWithInteger:RKSyncStatusShouldNotSync]];
+        
         for (NSEntityDescription *entity in [_managedObjectModel entities]) {
-           
+            NSAttributeDescription *syncAttribute = [[NSAttributeDescription alloc] init];
+            [syncAttribute setName:@"_rkManagedObjectSyncStatus"];
+            [syncAttribute setAttributeType:NSInteger16AttributeType];
+            [syncAttribute setOptional:NO];
+            [syncAttribute setDefaultValue:[NSNumber numberWithInteger:RKSyncStatusShouldNotSync]];
 
             //TODO: Add NSExpression validation so that this throws an error when set to an invalid value
             
@@ -89,9 +89,9 @@ static NSString* const RKManagedObjectStoreThreadDictionaryEntityCacheKey = @"RK
                 NSArray *newProperties = [[entity properties] arrayByAddingObject:syncAttribute];
                 [entity setProperties:newProperties];
             }
-            
+            [syncAttribute release];
         }
-        [syncAttribute release];
+        
         [RKManagedObjectSyncObserver setSharedSyncObserver:[[RKManagedObjectSyncObserver alloc] init]];
         
         _delegate = delegate;
@@ -198,7 +198,7 @@ static NSString* const RKManagedObjectStoreThreadDictionaryEntityCacheKey = @"RK
 	NSURL *storeUrl = [NSURL fileURLWithPath:self.pathToStoreFile];
 	
 	NSError *error;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[_managedObjectModel copy]];
 	
 	// Allow inferred migration from the original version of the application.
 	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
