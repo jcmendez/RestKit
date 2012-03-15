@@ -263,7 +263,8 @@
             case RKSyncStatusDelete:
             {
                 Class itemClass = NSClassFromString(item.className);
-                RKManagedObjectMapping *mapping = (RKManagedObjectMapping*)[[_objectManager mappingProvider] objectMappingForClass:objectClass];
+                RKManagedObjectMapping *mapping = (RKManagedObjectMapping*)[[_objectManager mappingProvider] objectMappingForClass:itemClass];
+              NSAssert(mapping, @"Mapping has to be non nil");
                 NSManagedObject *toDelete = [[itemClass alloc] initWithEntity:mapping.entity insertIntoManagedObjectContext:nil];
                 [toDelete populateFromDictionary:((RKDeletedObject*)object).data];
                 
