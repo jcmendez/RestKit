@@ -1,0 +1,20 @@
+[
+  { "human": {
+    "birthday": null,
+    "created_at": null,
+    "updated_at": null,
+    "sex": null,
+    "name": "Juan C. Mendez",
+    "id": 111,
+    "age": null }
+  },
+  { "human": {
+    "birthday": null,
+    "created_at": null,
+    "updated_at": null,
+    "sex": null,
+    "name": "Paco Jones",
+    "id": 222,
+    "age": null }
+  }
+]
