@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface RKSyncAppDelegate : NSObject <UIApplicationDelegate> {
+@interface RKSyncAppDelegate : NSObject <UIApplicationDelegate, RKManagedObjectStoreDelegate> {
 }
 
 @end
