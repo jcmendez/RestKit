@@ -117,5 +117,21 @@
     [super dealloc];
 }
 
+- (void)managedObjectStore:(RKManagedObjectStore *)objectStore didFailToCreatePersistentStoreCoordinatorWithError:(NSError *)error {
+  RKLogError(@"%@",error);
+}
+
+- (void)managedObjectStore:(RKManagedObjectStore *)objectStore didFailToDeletePersistentStore:(NSString *)pathToStoreFile error:(NSError *)error {
+  RKLogError(@"%@",error);
+}
+
+- (void)managedObjectStore:(RKManagedObjectStore *)objectStore didFailToCopySeedDatabase:(NSString *)seedDatabase error:(NSError *)error {
+  RKLogError(@"%@",error);  
+}
+
+- (void)managedObjectStore:(RKManagedObjectStore *)objectStore didFailToSaveContext:(NSManagedObjectContext *)context error:(NSError *)error exception:(NSException *)exception {
+  RKLogError(@"%@",error);  
+}
+
 
 @end
