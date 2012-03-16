@@ -23,7 +23,6 @@
 
 @interface RKSyncManager (Private)
 - (void)contextDidSave:(NSNotification*)notification;
-- (int)highestQueuePosition;
 
 //Shortcut for transparent syncing; used for notification call
 - (void)transparentSync;
@@ -83,13 +82,10 @@
         
         //don't check housekeeping objects
         if (![object isKindOfClass:[RKManagedObjectSyncQueue class]] && 
-            ![object isKindOfClass:[RKDeletedObject class]] && 
             mapping.syncMode != RKSyncModeNone) {
             
             //if we find important changes, we should transparent sync
             shouldTransparentSync = YES;
-            
-            RKDeletedObject *newDeletedObject = nil;
             
             //push new item onto queue
             RKManagedObjectSyncQueue *newRecord = [RKManagedObjectSyncQueue object];
@@ -132,34 +128,22 @@
                     [newRecord deleteEntity];
                     continue;
                 } else {
-                    //Archive deleted objects
-                    newDeletedObject = [RKDeletedObject object];
-                    newDeletedObject.data = [object toDictionary];
-                    NSLog(@"Archiving deleted object: %@", newDeletedObject);
-                    NSError *error = nil;
-                    [[newDeletedObject managedObjectContext] save:&error];
-                    if (error) {
-                        NSLog(@"Error! %@", error);
-                    }
-                    newRecord.objectIDString = [[[newDeletedObject objectID] URIRepresentation] absoluteString];
+                    //save the delete route
+                    newRecord.objectRoute = [_objectManager.router resourcePathForObject:object method:RKRequestMethodDELETE];
                 }
                 newRecord.syncStatus = [NSNumber numberWithInt:RKSyncStatusDelete];
             }
             
-            newRecord.queuePosition = [NSNumber numberWithInt: [self highestQueuePosition] + 1];
-
-            if (!newDeletedObject) {
-                newRecord.objectIDString = [[[object objectID] URIRepresentation] absoluteString];
-            }
+            newRecord.queuePosition = [NSNumber numberWithInt: [[RKManagedObjectSyncQueue maxValueFor:@"queuePosition"] intValue] + 1];
+            newRecord.objectIDString = [[[object objectID] URIRepresentation] absoluteString];
             newRecord.className = NSStringFromClass([object class]);
-            
             newRecord.syncMode = [NSNumber numberWithInt:mapping.syncMode];
             
-            NSLog(@"Writing to queue: %@", newRecord);
+            RKLogTrace(@"Writing to queue: %@", newRecord);
             NSError *error = nil;
             [[newRecord managedObjectContext] save:&error];
             if (error) {
-                NSLog(@"Error! %@", error);
+                RKLogError(@"Error writing queue item: %@", error);
             }
         }
     }
@@ -168,54 +152,6 @@
         [self transparentSync];
     }
     
-}
-
-- (int)highestQueuePosition {
-    //Taken directly from apple docs
-    
-    NSManagedObjectContext *context = self.objectManager.objectStore.managedObjectContext;
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"RKManagedObjectSyncQueue" inManagedObjectContext:context];
-    [request setEntity:entity];
-    
-    // Specify that the request should return dictionaries.
-    [request setResultType:NSDictionaryResultType];
-    
-    // Create an expression for the key path.
-    NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:@"queuePosition"];
-    
-    // Create an expression to represent the function you want to apply
-    NSExpression *expression = [NSExpression expressionForFunction:@"max:"
-                                                         arguments:[NSArray arrayWithObject:keyPathExpression]];
-    
-    // Create an expression description using the minExpression and returning a date.
-    NSExpressionDescription *expressionDescription = [[NSExpressionDescription alloc] init];
-    
-    // The name is the key that will be used in the dictionary for the return value.
-    [expressionDescription setName:@"maxQueuePosition"];
-    [expressionDescription setExpression:expression];
-    [expressionDescription setExpressionResultType:NSInteger32AttributeType]; // For example, NSDateAttributeType
-    
-    // Set the request's properties to fetch just the property represented by the expressions.
-    [request setPropertiesToFetch:[NSArray arrayWithObject:expressionDescription]];
-    
-    // Execute the fetch.
-    NSError *error;
-    id requestedValue = nil;
-    NSArray *objects = [context executeFetchRequest:request error:&error];
-    if (objects == nil) {
-        // Handle the error.
-    }
-    else {
-        if ([objects count] > 0) {
-            requestedValue = [[objects objectAtIndex:0] valueForKey:@"maxQueuePosition"];
-        }
-    }
-    
-    [expressionDescription release];
-    [request release];
-    return [requestedValue intValue];
 }
 
 - (void)syncObjectsWithSyncMode:(RKSyncMode)syncMode andClass:(Class)objectClass {
@@ -234,15 +170,23 @@
     [_queue removeAllObjects];
     
     //Build predicate for fetching the right records
+    NSPredicate *syncModePredicate = nil;
+    NSPredicate *objectClassPredicate = nil;
     NSPredicate *predicate = nil;
     if (syncMode) {
-        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects: predicate, [NSPredicate predicateWithFormat:@"syncMode == %@", [NSNumber numberWithInt:syncMode], nil], nil]];
+        syncModePredicate = [NSPredicate predicateWithFormat:@"syncMode == %@", [NSNumber numberWithInt:syncMode], nil];
+        predicate = syncModePredicate;
     }
     if (objectClass) {
-        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:predicate, [NSPredicate predicateWithFormat:@"className == %@", NSStringFromClass(objectClass), nil], nil]];
+        objectClassPredicate = [NSPredicate predicateWithFormat:@"className == %@", NSStringFromClass(objectClass), nil];
+        predicate = objectClassPredicate;
     }
-    
-    [_queue addObjectsFromArray:[RKManagedObjectSyncQueue findAllSortedBy:@"queuePosition" ascending:NO withPredicate:predicate inContext:context]];
+    if (objectClass && syncMode) {
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:syncModePredicate, objectClassPredicate, nil]];
+    }
+    if (predicate) {
+        [_queue addObjectsFromArray:[RKManagedObjectSyncQueue findAllSortedBy:@"queuePosition" ascending:NO withPredicate:predicate inContext:context]];
+    }
     
     if (_delegate && [_delegate respondsToSelector:@selector(syncManager:willPushObjectsInQueue:withSyncMode:andClass:)]) {
         [_delegate syncManager:self willPushObjectsInQueue:_queue withSyncMode:syncMode andClass:objectClass];
@@ -251,28 +195,17 @@
     while ([_queue lastObject]) {
         RKManagedObjectSyncQueue *item = (RKManagedObjectSyncQueue*)[_queue lastObject];
         NSManagedObjectID *itemID = [_objectManager.objectStore.persistentStoreCoordinator managedObjectIDForURIRepresentation:[NSURL URLWithString:item.objectIDString]];
-        id object = [context objectWithID:itemID];
         
         switch ([item.syncStatus intValue]) {
             case RKSyncStatusPost:
-                [_objectManager postObject:object delegate:self];
+                [_objectManager postObject:[context objectWithID:itemID] delegate:self];
                 break;
             case RKSyncStatusPut:
-                [_objectManager putObject:object delegate:self];
+                [_objectManager putObject:[context objectWithID:itemID] delegate:self];
                 break;
             case RKSyncStatusDelete:
-            {
-                Class itemClass = NSClassFromString(item.className);
-                RKManagedObjectMapping *mapping = (RKManagedObjectMapping*)[[_objectManager mappingProvider] objectMappingForClass:itemClass];
-              NSAssert(mapping, @"Mapping has to be non nil");
-                NSManagedObject *toDelete = [[itemClass alloc] initWithEntity:mapping.entity insertIntoManagedObjectContext:nil];
-                [toDelete populateFromDictionary:((RKDeletedObject*)object).data];
-                
-                //We don't use deleteObject so that Restkit doesn't try to clean up our transient nsmanagedobject
-                [[_objectManager client] delete:[_objectManager.router resourcePathForObject:toDelete method:RKRequestMethodDELETE] delegate:self];
-                [toDelete release];
+                [[_objectManager client] delete:item.objectRoute delegate:self];
                 break;
-            }
             default:
                 break;
         }
@@ -282,7 +215,7 @@
         NSError *error = nil;
         [context save:&error];
         if (error) {
-            NSLog(@"Error removing queue item! %@", error);
+            RKLogError(@"Error removing queue item: %@", error);
         }
     }
     if (_delegate && [_delegate respondsToSelector:@selector(syncManager:didPushObjectsWithSyncMode:andClass:)]) {
@@ -337,13 +270,8 @@
         if ([objectLoader isPOST] || [objectLoader isPUT] || [objectLoader isDELETE]) {
             [_objectManager.objectStore save];
             
-            NSLog(@"Total unsynced objects: %i", [objectLoader.queue loadingCount]);
+            RKLogTrace(@"Total unsynced objects: %i", [objectLoader.queue loadingCount]);
             
-        } else if ([objectLoader isGET]) {
-            //A GET request means everything has been pushed and now we're pulling
-            if (_delegate && [_delegate respondsToSelector:@selector(didFinishSyncing)]) {
-                [_delegate didFinishSyncing];
-            }
         }
     }
 }

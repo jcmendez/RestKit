@@ -752,10 +752,52 @@ static NSNumber *defaultBatchSize = nil;
 
 + (NSNumber *)maxValueFor:(NSString *)property
 {
-	NSManagedObject *obj = [[self class] findFirstByAttribute:property
-													withValue:[NSString stringWithFormat:@"max(%@)", property]];
-
-	return [obj valueForKey:property];
+	//Taken directly from apple docs
+    
+    NSManagedObjectContext *context = [[self class] managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class])
+                                              inManagedObjectContext:context];
+    [request setEntity:entity];
+    
+    // Specify that the request should return dictionaries.
+    [request setResultType:NSDictionaryResultType];
+    
+    // Create an expression for the key path.
+    NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:property];
+    
+    // Create an expression to represent the function you want to apply
+    NSExpression *expression = [NSExpression expressionForFunction:@"max:"
+                                                         arguments:[NSArray arrayWithObject:keyPathExpression]];
+    
+    // Create an expression description using the minExpression and returning a date.
+    NSExpressionDescription *expressionDescription = [[NSExpressionDescription alloc] init];
+    
+    // The name is the key that will be used in the dictionary for the return value.
+    [expressionDescription setName:@"maxValue"];
+    [expressionDescription setExpression:expression];
+    [expressionDescription setExpressionResultType:NSInteger32AttributeType]; // For example, NSDateAttributeType
+    
+    // Set the request's properties to fetch just the property represented by the expressions.
+    [request setPropertiesToFetch:[NSArray arrayWithObject:expressionDescription]];
+    
+    // Execute the fetch.
+    NSError *error;
+    NSNumber *requestedValue = nil;
+    NSArray *objects = [context executeFetchRequest:request error:&error];
+    if (objects == nil) {
+        return nil;
+    }
+    else {
+        if ([objects count] > 0) {
+            requestedValue = [[objects objectAtIndex:0] valueForKey:@"maxValue"];
+        }
+    }
+    
+    [expressionDescription release];
+    [request release];
+    return requestedValue;
 }
 
 + (id)objectWithMinValueFor:(NSString *)property inContext:(NSManagedObjectContext *)context
@@ -771,117 +813,6 @@ static NSNumber *defaultBatchSize = nil;
 + (id)objectWithMinValueFor:(NSString *)property
 {
 	return [[self class] objectWithMinValueFor:property inContext:[self currentContext]];
-}
-
-
-//Taken from http://vladimir.zardina.org/2010/03/serializing-archivingunarchiving-an-nsmanagedobject-graph/
-- (NSDictionary*) toDictionary
-{
-    self.accessibilityLabel = @"traversed";
-    
-    NSArray* attributes = [[[self entity] attributesByName] allKeys];
-    NSArray* relationships = [[[self entity] relationshipsByName] allKeys];
-    NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:
-                                 [attributes count] + [relationships count] + 1];
-    
-    [dict setObject:[[self class] description] forKey:@"class"];
-    
-    for (NSString* attr in attributes) {
-        NSObject* value = [self valueForKey:attr];
-        
-        if (value != nil) {
-            [dict setObject:value forKey:attr];
-        }
-    }
-    
-    for (NSString* relationship in relationships) {
-        NSObject* value = [self valueForKey:relationship];
-        
-        if ([value isKindOfClass:[NSSet class]]) {
-            // To-many relationship
-            
-            // The core data set holds a collection of managed objects
-            NSSet* relatedObjects = (NSSet*) value;
-            
-            // Our set holds a collection of dictionaries
-            NSMutableSet* dictSet = [NSMutableSet setWithCapacity:[relatedObjects count]];
-            
-            for (NSManagedObject* relatedObject in relatedObjects) {
-                if (![relatedObject.accessibilityLabel isEqualToString:@"traversed"]
-                    ) {
-                    [dictSet addObject:[relatedObject toDictionary]];
-                }
-            }
-            
-            [dict setObject:dictSet forKey:relationship];
-        }
-        else if ([value isKindOfClass:[NSManagedObject class]]) {
-            // To-one relationship
-            
-            NSManagedObject* relatedObject = (NSManagedObject*) value;
-            
-            if (![relatedObject.accessibilityLabel isEqualToString:@"traversed"]) {
-                // Call toDictionary on the referenced object and put the result back into our dictionary.
-                [dict setObject:[relatedObject toDictionary] forKey:relationship];
-            }
-        }
-    }
-    
-    return dict;
-}
-
-- (void) populateFromDictionary:(NSDictionary*)dict
-{
-    NSManagedObjectContext* context = [self managedObjectContext];
-    
-    for (NSString* key in dict) {
-        if ([key isEqualToString:@"class"]) {
-            continue;
-        }
-        
-        NSObject* value = [dict objectForKey:key];
-        
-        if ([value isKindOfClass:[NSDictionary class]]) {
-            // This is a to-one relationship
-            NSManagedObject* relatedObject =
-            [NSManagedObject createManagedObjectFromDictionary:(NSDictionary*)value
-                                                           inContext:context];
-            
-            [self setValue:relatedObject forKey:key];
-        }
-        else if ([value isKindOfClass:[NSSet class]]) {
-            // This is a to-many relationship
-            NSSet* relatedObjectDictionaries = (NSSet*) value;
-            
-            // Get a proxy set that represents the relationship, and add related objects to it.
-            // (Note: this is provided by Core Data)
-            NSMutableSet* relatedObjects = [self mutableSetValueForKey:key];
-            
-            for (NSDictionary* relatedObjectDict in relatedObjectDictionaries) {
-                NSManagedObject* relatedObject =
-                [NSManagedObject createManagedObjectFromDictionary:relatedObjectDict
-                                                               inContext:context];
-                [relatedObjects addObject:relatedObject];
-            }
-        }
-        else if (value != nil) {
-            // This is an attribute
-            [self setValue:value forKey:key];
-        }
-    }
-}
-
-+ (NSManagedObject*) createManagedObjectFromDictionary:(NSDictionary*)dict
-                                                   inContext:(NSManagedObjectContext*)context
-{
-    NSString* class = [dict objectForKey:@"class"];
-    NSManagedObject* newObject =
-    (NSManagedObject*)[NSEntityDescription insertNewObjectForEntityForName:class
-                                                          inManagedObjectContext:context];
-    
-    [newObject populateFromDictionary:dict];
-    
-    return newObject;
 }
 
 @end
