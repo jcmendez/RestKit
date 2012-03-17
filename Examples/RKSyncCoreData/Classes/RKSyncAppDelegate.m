@@ -24,9 +24,7 @@
     
   // Enable automatic network activity indicator management
   objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
-  
-  objectManager.objectStore.cacheStrategy = [[RKFetchRequestMappingCache alloc] init];
-  
+    
     // Initialize object store
     #ifdef RESTKIT_GENERATE_SEED_DB
         NSString *seedDatabaseName = nil;
@@ -38,6 +36,8 @@
 
     objectManager.objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:databaseName usingSeedDatabaseName:seedDatabaseName managedObjectModel:nil delegate:self];
     
+  objectManager.objectStore.cacheStrategy = [[RKFetchRequestMappingCache alloc] init];
+
     // Setup our object mappings    
     /*!
      Mapping by entity. Here we are configuring a mapping by targetting a Core Data entity with a specific
