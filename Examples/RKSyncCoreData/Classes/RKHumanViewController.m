@@ -45,9 +45,10 @@
 }
 
 - (void)loadData {
-    // Load the object model via RestKit	
-    RKObjectManager* objectManager = [RKObjectManager sharedManager];
-    [objectManager loadObjectsAtResourcePath:@"/humans" delegate:self];
+  // The following call to the syncManager will replace a regular loadObjects call like
+  //     [objectManager loadObjectsAtResourcePath:@"/humans" delegate:self];
+  RKManagedObjectSyncManager *syncManager = [RKManagedObjectSyncManager sharedSyncManager];
+  [syncManager syncObjectsForEntity:[RKHuman entity] delegate:self];
 }
 
 - (void)reloadButtonWasPressed:(id)sender {
@@ -55,29 +56,39 @@
 	[self loadData];
 }
 
-#pragma mark RKObjectLoaderDelegate methods
+#pragma mark RKSyncManagerDelegate methods
 
-- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+- (void) syncManagerFinishedSync:(RKManagedObjectSyncManager *)manager {
 	[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastUpdatedAt"];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	NSLog(@"Loaded humans: %@", objects);
-	[self loadObjectsFromDataStore];
-	[_tableView reloadData];
+	[[NSUserDefaults standardUserDefaults] synchronize];  
+  NSLog(@"Synced humans successfully");
+  [self loadObjectsFromDataStore];
+  [_tableView reloadData];
+
 }
 
-- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
-	UIAlertView* alert = [[[UIAlertView alloc] initWithTitle:@"Error" 
-                                                     message:[error localizedDescription] 
-                                                    delegate:nil 
-                                           cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
-	[alert show];
-	NSLog(@"Hit error: %@", error);
-}
+// #pragma mark RKObjectLoaderDelegate methods
+//- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+//	[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastUpdatedAt"];
+//	[[NSUserDefaults standardUserDefaults] synchronize];
+//	NSLog(@"Loaded humans: %@", objects);
+//	[self loadObjectsFromDataStore];
+//	[_tableView reloadData];
+//}
+//
+//- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+//	UIAlertView* alert = [[[UIAlertView alloc] initWithTitle:@"Error" 
+//                                                     message:[error localizedDescription] 
+//                                                    delegate:nil 
+//                                           cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+//	[alert show];
+//	NSLog(@"Hit error: %@", error);
+//}
 
 #pragma mark UITableViewDelegate methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	CGSize size = [[[_humans objectAtIndex:indexPath.row] name] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300, 9000)];
+	CGSize size = [[[_humans objectAtIndex:indexPath.row] name] sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(300, 9000)];
 	return size.height + 10;
 }
 
@@ -101,7 +112,7 @@
 	UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
 	if (nil == cell) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
-		cell.textLabel.font = [UIFont systemFontOfSize:14];
+		cell.textLabel.font = [UIFont systemFontOfSize:16];
 		cell.textLabel.numberOfLines = 0;
 		cell.textLabel.backgroundColor = [UIColor clearColor];
 		cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"listbg.png"]];

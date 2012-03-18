@@ -36,4 +36,5 @@
 #import "NSManagedObjectContext+RKAdditions.h"
 #import "NSManagedObject+RKAdditions.h"
 
+#import "RKManagedObjectSyncManager.h"
 #import "RKManagedObjectMapping+RKSyncManager.h"

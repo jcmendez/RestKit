@@ -68,9 +68,10 @@
      nil];
     [humanMapping mapRelationship:@"cats" withMapping:catMapping];
   
-    // The next three statements instruct the sync manager to sync the RKHumans entity, and instruct it to use the
+    // The next four statements instruct the sync manager to sync the RKHumans entity, and instruct it to use the
     // fields updatedAt and createdAt to compare instances.  We want full two way sync 
-    humanMapping.syncModeForEntity = RKSyncModeTwoWay | RKSyncModeAllowFastSyncsFlag;
+    humanMapping.syncModeForEntity = RKSyncModePullFromServer;
+    humanMapping.syncResourcePathForEntity = @"/humans";
     humanMapping.syncUpdateStampAttribute = @"updatedAt";
     humanMapping.syncCreateStampAttribute = @"createdAt";
   NSLog(@"Looking at fields %@, %@ for sync", humanMapping.syncBackendCreateStampAttribute, humanMapping.syncBackendUpdateStampAttribute);
