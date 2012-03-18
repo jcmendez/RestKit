@@ -56,6 +56,8 @@
      */
     RKManagedObjectMapping* humanMapping = [RKManagedObjectMapping mappingForClass:[RKHuman class] inManagedObjectStore:objectManager.objectStore];
     humanMapping.primaryKeyAttribute = @"railsID";
+  
+    // Here we do the regular RestKit mapping
     [humanMapping mapKeyPathsToAttributes:@"id", @"railsID",
      @"created_at", @"createdAt",
      @"updated_at", @"updatedAt",
@@ -65,6 +67,14 @@
      @"birthday", @"birthday", 
      nil];
     [humanMapping mapRelationship:@"cats" withMapping:catMapping];
+  
+    // The next three statements instruct the sync manager to sync the RKHumans entity, and instruct it to use the
+    // fields updatedAt and createdAt to compare instances.  We want full two way sync 
+    humanMapping.syncModeForEntity = RKSyncModeTwoWay | RKSyncModeAllowFastSyncsFlag;
+    humanMapping.syncUpdateStampAttribute = @"updatedAt";
+    humanMapping.syncCreateStampAttribute = @"createdAt";
+  NSLog(@"Looking at fields %@, %@ for sync", humanMapping.syncBackendCreateStampAttribute, humanMapping.syncBackendUpdateStampAttribute);
+
     
     // Update date format so that we can parse Twitter dates properly
 	// Wed Sep 29 15:31:08 +0000 2010

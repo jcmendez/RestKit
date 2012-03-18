@@ -697,6 +697,20 @@
 		49D275AE14C9F3020090845D /* RKISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 49D275AB14C9F3020090845D /* RKISO8601DateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49D275AF14C9F3020090845D /* RKISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D275AC14C9F3020090845D /* RKISO8601DateFormatter.m */; };
 		49D275B014C9F3020090845D /* RKISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D275AC14C9F3020090845D /* RKISO8601DateFormatter.m */; };
+		6494E96B1514316100496B1D /* RKManagedObjectSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9691514316100496B1D /* RKManagedObjectSyncManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6494E96C1514316100496B1D /* RKManagedObjectSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9691514316100496B1D /* RKManagedObjectSyncManager.h */; };
+		6494E96D1514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
+		6494E96E1514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
+		6494E96F1514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
+		6494E9701514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
+		6494E9711514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
+		6494E9751514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9731514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6494E9761514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9731514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h */; };
+		6494E9771514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */; };
+		6494E9781514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */; };
+		6494E9791514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */; };
+		6494E97A1514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */; };
+		6494E97B1514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */; };
 		73D3907414CA1AE00093E3D6 /* parent.json in Resources */ = {isa = PBXBuildFile; fileRef = 73D3907114CA19F90093E3D6 /* parent.json */; };
 		73D3907514CA1AE20093E3D6 /* parent.json in Resources */ = {isa = PBXBuildFile; fileRef = 73D3907114CA19F90093E3D6 /* parent.json */; };
 		73D3907614CA1AE60093E3D6 /* child.json in Resources */ = {isa = PBXBuildFile; fileRef = 73D3907314CA1A4A0093E3D6 /* child.json */; };
@@ -1164,6 +1178,10 @@
 		49D2759C14C9EF1E0090845D /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.txt; path = iso8601parser/README.txt; sourceTree = "<group>"; };
 		49D275AB14C9F3020090845D /* RKISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKISO8601DateFormatter.h; sourceTree = "<group>"; };
 		49D275AC14C9F3020090845D /* RKISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKISO8601DateFormatter.m; sourceTree = "<group>"; };
+		6494E9691514316100496B1D /* RKManagedObjectSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectSyncManager.h; sourceTree = "<group>"; };
+		6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKManagedObjectSyncManager.m; sourceTree = "<group>"; };
+		6494E9731514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RKManagedObjectMapping+RKSyncManager.h"; sourceTree = "<group>"; };
+		6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RKManagedObjectMapping+RKSyncManager.m"; sourceTree = "<group>"; };
 		7394DF3514CF157A00CE7BCE /* RKManagedObjectMappingCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectMappingCache.h; sourceTree = "<group>"; };
 		7394DF3814CF168C00CE7BCE /* RKFetchRequestMappingCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKFetchRequestMappingCache.h; sourceTree = "<group>"; };
 		7394DF3914CF168C00CE7BCE /* RKFetchRequestMappingCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKFetchRequestMappingCache.m; sourceTree = "<group>"; };
@@ -1356,6 +1374,10 @@
 				257ABAAF15112DD400CCAA76 /* NSManagedObjectContext+RKAdditions.m */,
 				257ABAB41511371C00CCAA76 /* NSManagedObject+RKAdditions.h */,
 				257ABAB51511371D00CCAA76 /* NSManagedObject+RKAdditions.m */,
+				6494E9691514316100496B1D /* RKManagedObjectSyncManager.h */,
+				6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */,
+				6494E9731514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h */,
+				6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -2217,6 +2239,8 @@
 				25EC1B3914F84B5D00C3CF3F /* UIImage+RKAdditions.h in Headers */,
 				257ABAB015112DD500CCAA76 /* NSManagedObjectContext+RKAdditions.h in Headers */,
 				257ABAB61511371E00CCAA76 /* NSManagedObject+RKAdditions.h in Headers */,
+				6494E96B1514316100496B1D /* RKManagedObjectSyncManager.h in Headers */,
+				6494E9751514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2337,6 +2361,8 @@
 				25EC1B3A14F84B5D00C3CF3F /* UIImage+RKAdditions.h in Headers */,
 				257ABAB115112DD500CCAA76 /* NSManagedObjectContext+RKAdditions.h in Headers */,
 				257ABAB71511371E00CCAA76 /* NSManagedObject+RKAdditions.h in Headers */,
+				6494E96C1514316100496B1D /* RKManagedObjectSyncManager.h in Headers */,
+				6494E9761514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2736,6 +2762,8 @@
 				25EC1B3B14F84B5D00C3CF3F /* UIImage+RKAdditions.m in Sources */,
 				257ABAB215112DD500CCAA76 /* NSManagedObjectContext+RKAdditions.m in Sources */,
 				257ABAB81511371E00CCAA76 /* NSManagedObject+RKAdditions.m in Sources */,
+				6494E96D1514316100496B1D /* RKManagedObjectSyncManager.m in Sources */,
+				6494E9771514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2816,6 +2844,8 @@
 				252EFB0A14D98F4D004863C8 /* RKSearchWordObserverTest.m in Sources */,
 				252EFB0D14D98F76004863C8 /* RKMutableBlockDictionaryTest.m in Sources */,
 				25EC1A4A14F73CA200C3CF3F /* RKInMemoryEntityCacheTest.m in Sources */,
+				6494E96E1514316100496B1D /* RKManagedObjectSyncManager.m in Sources */,
+				6494E9781514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2912,6 +2942,8 @@
 				25EC1B3C14F84B5D00C3CF3F /* UIImage+RKAdditions.m in Sources */,
 				257ABAB315112DD500CCAA76 /* NSManagedObjectContext+RKAdditions.m in Sources */,
 				257ABAB91511371E00CCAA76 /* NSManagedObject+RKAdditions.m in Sources */,
+				6494E96F1514316100496B1D /* RKManagedObjectSyncManager.m in Sources */,
+				6494E9791514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2992,6 +3024,8 @@
 				252EFB0B14D98F4D004863C8 /* RKSearchWordObserverTest.m in Sources */,
 				252EFB0E14D98F76004863C8 /* RKMutableBlockDictionaryTest.m in Sources */,
 				25EC1A4B14F73CA200C3CF3F /* RKInMemoryEntityCacheTest.m in Sources */,
+				6494E9701514316100496B1D /* RKManagedObjectSyncManager.m in Sources */,
+				6494E97A1514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2999,6 +3033,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6494E9711514316100496B1D /* RKManagedObjectSyncManager.m in Sources */,
+				6494E97B1514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

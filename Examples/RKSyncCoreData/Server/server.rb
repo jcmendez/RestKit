@@ -32,8 +32,8 @@ class RKSyncCoreDataServer < Sinatra::Base
     {"humans" => @humans}.to_json
   end
 
-  # GET /humans/1.json  
-  get '/humans/:id.json' do
+  # GET /humans/1  
+  get '/humans/:id' do
     @human = Human.find(params[:id]) rescue nil
     @human.to_json if @human
   end
@@ -51,8 +51,8 @@ class RKSyncCoreDataServer < Sinatra::Base
   end
   
   # DELETE /humans/1.json 
-  # curl -X DELETE http://127.0.0.1:4567/humans/1.json
-  delete '/humans/:id.json' do
+  # curl -X DELETE http://127.0.0.1:9292/humans/1
+  delete '/humans/:id' do
     @human = Human.find(params[:id]) rescue nil
     @human.delete if @human
     status 204
