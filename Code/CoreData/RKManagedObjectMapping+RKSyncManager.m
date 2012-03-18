@@ -9,12 +9,23 @@
 #import "RKManagedObjectSyncManager.h"
 #import "RKManagedObjectMapping+RKSyncManager.h"
 
+/**
+ * All these methods are mostly syntactic sugar to be able to define the sync parameters
+ * when the mappings are being defined
+ */
 @implementation RKManagedObjectMapping(RKSyncManager)
 
 - (void)setSyncModeForEntity:(NSUInteger)syncModeForEntity {
   [[RKManagedObjectSyncManager sharedSyncManager] setObjectMapping: self 
                                                          forEntity:[self entity]];
   [[RKManagedObjectSyncManager sharedSyncManager] setSyncMode: syncModeForEntity 
+                                                    forEntity:[self entity]];
+}
+
+- (void)setSyncResourcePathForEntity:(NSString *) resourcePathForEntity {
+  [[RKManagedObjectSyncManager sharedSyncManager] setObjectMapping: self 
+                                                         forEntity:[self entity]];
+  [[RKManagedObjectSyncManager sharedSyncManager] setSyncResourcePath: resourcePathForEntity 
                                                     forEntity:[self entity]];
 }
 
@@ -34,6 +45,10 @@
 
 - (NSUInteger)syncModeForEntity {
   return [[RKManagedObjectSyncManager sharedSyncManager] syncModeForEntity:[self entity]];
+}
+
+- (NSString *)syncResourcePathForEntity {
+  return [[RKManagedObjectSyncManager sharedSyncManager] syncResourcePathForEntity:[self entity]];  
 }
 
 - (NSString *)syncCreateStampAttribute {

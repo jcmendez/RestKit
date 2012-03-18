@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
 
-@interface RKHumanViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, RKObjectLoaderDelegate> {
+@interface RKHumanViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, RKSyncManagerDelegate> {
 	UITableView* _tableView;
 	NSArray* _humans;
 }
