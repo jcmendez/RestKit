@@ -23,6 +23,8 @@
 #import "RKManagedObjectMappingCache.h"
 
 @class RKManagedObjectStore;
+@class RKManagedObjectSyncManager;
+
 
 /**
  * Notifications
@@ -79,9 +81,16 @@ extern NSString* const RKManagedObjectStoreDidFailSaveNotification;
 ///-----------------------------------------------------------------------------
 
 /**
-
+ * The caching strategy for this object store
  */
 @property (nonatomic, retain) NSObject<RKManagedObjectMappingCache> *cacheStrategy;
+
+/**
+ * The sync manager for this object store.  For now, I'm adding the sync manager as a singleton,
+ * so there is no point in having a reference here, but some use cases may grant the need for
+ * separate sync managers.  TODO: review this architectural design
+ */
+@property (nonatomic, retain) RKManagedObjectSyncManager *syncManager;
 
 /**
  * Initialize a new managed object store with a SQLite database with the filename specified

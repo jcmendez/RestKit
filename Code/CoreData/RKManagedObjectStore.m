@@ -29,6 +29,7 @@
 #import "RKInMemoryMappingCache.h"
 #import "NSBundle+RKAdditions.h"
 #import "NSManagedObjectContext+RKAdditions.h"
+#import "RKManagedObjectSyncManager.h"
 
 // Set Logging Component
 #undef RKLogComponent
@@ -57,6 +58,7 @@ static RKManagedObjectStore *defaultObjectStore = nil;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize cacheStrategy = _cacheStrategy;
+@synthesize syncManager = _syncManager;
 @synthesize primaryManagedObjectContext;
 
 + (RKManagedObjectStore *)defaultObjectStore {
