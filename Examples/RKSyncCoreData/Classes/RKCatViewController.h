@@ -1,5 +1,5 @@
 //
-//  RKHumanViewController.h
+//  RKCatViewController.h
 //  RKSyncCoreData
 //
 //  Created by Juan C. Mendez on 3/15/12.
@@ -8,9 +8,9 @@
 
 #import "RKEntityViewController.h"
 
-@class RKCatViewController;
+@class RKHuman;
 
-@interface RKHumanViewController : RKEntityViewController {
-  RKCatViewController *catViewController;
-}
+@interface RKCatViewController : RKEntityViewController
+@property (strong,nonatomic) RKHuman *human;
 @end
+

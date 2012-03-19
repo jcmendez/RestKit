@@ -5,6 +5,7 @@
     "updated_at": null,
     "sex": null,
     "name": "Juan C. Mendez",
+ "cats" : [ { "id" : 1110, "name": "Bill the Cat" }, { "id" : 1111, "name": "Bowser" }, { "id" : 1112, "name": "Burbank" } ],
     "id": 111,
     "age": null }
   },
@@ -14,6 +15,7 @@
     "updated_at": null,
     "sex": null,
     "name": "Paco Jones",
+    "cats" : [ { "id" : 2220, "name": "Scat" }, { "id" : 2221, "name": "Si" }, { "id" : 2222, "name": "Smelly Cat" } ],
     "id": 222,
     "age": null }
   }

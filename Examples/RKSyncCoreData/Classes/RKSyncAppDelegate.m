@@ -46,8 +46,18 @@
      */
     RKManagedObjectMapping* catMapping = [RKManagedObjectMapping mappingForClass:[RKCat class] inManagedObjectStore:objectManager.objectStore];
     catMapping.primaryKeyAttribute = @"railsID";
-    [catMapping mapKeyPath:@"id" toAttribute:@"railsID"];
-    [catMapping mapKeyPath:@"name" toAttribute:@"name"];
+    [catMapping mapKeyPathsToAttributes:@"id", @"railsID",
+     @"created_at", @"createdAt",
+     @"updated_at", @"updatedAt",
+     @"name", @"name",
+     nil];
+    // The next four statements instruct the sync manager to sync the RKHumans entity, and instruct it to use the
+    // fields updatedAt and createdAt to compare instances.  We want full two way sync 
+    catMapping.syncModeForEntity = RKSyncModePullFromServer;
+    catMapping.syncResourcePathForEntity = @"/cats";
+    catMapping.syncUpdateStampAttribute = @"updatedAt";
+    catMapping.syncCreateStampAttribute = @"createdAt";
+
     
     /*!
      Map to a target object class -- just as you would for a non-persistent class. The entity is resolved
@@ -115,9 +125,10 @@
 #endif
     
     // Create Window and View Controllers
-	RKHumanViewController* viewController = [[[RKHumanViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-	UINavigationController* controller = [[UINavigationController alloc] initWithRootViewController:viewController];
-	UIWindow* window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    RKHumanViewController* viewController = [[[RKHumanViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    UINavigationController* controller = [[UINavigationController alloc] initWithRootViewController:viewController];
+    UIWindow* window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+  [window setBackgroundColor:[UIColor whiteColor]];
     [window addSubview:controller.view];
     [window makeKeyAndVisible];
 

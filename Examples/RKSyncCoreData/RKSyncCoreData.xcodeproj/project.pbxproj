@@ -15,8 +15,6 @@
 		250CA6D0147D90C50047D347 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CA6CF147D90C50047D347 /* Security.framework */; };
 		2538E865123424F000ACB5D7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2538E864123424F000ACB5D7 /* CoreData.framework */; };
 		2538E8671234250100ACB5D7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2538E8661234250100ACB5D7 /* SystemConfiguration.framework */; };
-		25F2A1791322D59400A33DE4 /* listbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3CE3FA125B9A6E0083FDCB /* listbg.png */; };
-		25F2A17A1322D59400A33DE4 /* listbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3CE3FB125B9A6E0083FDCB /* listbg@2x.png */; };
 		25F2A17D1322D59400A33DE4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3CE40C125B9B450083FDCB /* Default.png */; };
 		25F2A17E1322D59400A33DE4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3CE40D125B9B450083FDCB /* Default@2x.png */; };
 		25F2A1801322D59400A33DE4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -32,8 +30,6 @@
 		25F2A2D913240CEC00A33DE4 /* RKSeedDatabase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 25F2A2D813240CEC00A33DE4 /* RKSeedDatabase.sqlite */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28D7ACF80DDB3853001CB0EB /* RKHumanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* RKHumanViewController.m */; };
-		3F3CE3FC125B9A6E0083FDCB /* listbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3CE3FA125B9A6E0083FDCB /* listbg.png */; };
-		3F3CE3FD125B9A6E0083FDCB /* listbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3CE3FB125B9A6E0083FDCB /* listbg@2x.png */; };
 		3F3CE410125B9B450083FDCB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3CE40C125B9B450083FDCB /* Default.png */; };
 		3F3CE411125B9B450083FDCB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3CE40D125B9B450083FDCB /* Default@2x.png */; };
 		3FB46641131D78A400E37C51 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB46640131D78A400E37C51 /* libxml2.dylib */; };
@@ -51,6 +47,10 @@
 		646A81BA1512A4890025238B /* RestKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 646A81B91512A4890025238B /* RestKitResources.bundle */; };
 		646A81BB1512A4890025238B /* RestKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 646A81B91512A4890025238B /* RestKitResources.bundle */; };
 		646A81BC1512A5080025238B /* humans.json in Resources */ = {isa = PBXBuildFile; fileRef = 646A81B015129AEA0025238B /* humans.json */; };
+		649A3A73151696C700DE0797 /* RKEntityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649A3A72151696C700DE0797 /* RKEntityViewController.m */; };
+		649A3A74151696C700DE0797 /* RKEntityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649A3A72151696C700DE0797 /* RKEntityViewController.m */; };
+		649A3A851516A33C00DE0797 /* RKCatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649A3A841516A33C00DE0797 /* RKCatViewController.m */; };
+		649A3A861516B6D400DE0797 /* RKCatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649A3A841516A33C00DE0797 /* RKCatViewController.m */; };
 		8452D3F9128244D90069F4A9 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8452D3F8128244D90069F4A9 /* CFNetwork.framework */; };
 		8452D3FD128244E60069F4A9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8452D3FC128244E60069F4A9 /* MobileCoreServices.framework */; };
 		CD39C14E14EEED8700E84874 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD39C14D14EEED8700E84874 /* QuartzCore.framework */; };
@@ -125,8 +125,6 @@
 		28D7ACF70DDB3853001CB0EB /* RKHumanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKHumanViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* RKSync_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSync_Prefix.pch; sourceTree = "<group>"; };
-		3F3CE3FA125B9A6E0083FDCB /* listbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listbg.png; sourceTree = "<group>"; };
-		3F3CE3FB125B9A6E0083FDCB /* listbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listbg@2x.png"; sourceTree = "<group>"; };
 		3F3CE40C125B9B450083FDCB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		3F3CE40D125B9B450083FDCB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		3FB46640131D78A400E37C51 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -137,6 +135,10 @@
 		646A81AC1512999C0025238B /* RKHuman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKHuman.m; path = ../Resources/RKHuman.m; sourceTree = "<group>"; };
 		646A81B015129AEA0025238B /* humans.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = humans.json; sourceTree = "<group>"; };
 		646A81B91512A4890025238B /* RestKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RestKitResources.bundle; sourceTree = "<group>"; };
+		649A3A71151696C700DE0797 /* RKEntityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKEntityViewController.h; sourceTree = "<group>"; };
+		649A3A72151696C700DE0797 /* RKEntityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKEntityViewController.m; sourceTree = "<group>"; };
+		649A3A831516A33C00DE0797 /* RKCatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKCatViewController.h; sourceTree = "<group>"; };
+		649A3A841516A33C00DE0797 /* RKCatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKCatViewController.m; sourceTree = "<group>"; };
 		8452D3F8128244D90069F4A9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		8452D3FC128244E60069F4A9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* RKSync-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RKSync-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -192,8 +194,12 @@
 				646A81AC1512999C0025238B /* RKHuman.m */,
 				1D3623240D0F684500981E51 /* RKSyncAppDelegate.h */,
 				1D3623250D0F684500981E51 /* RKSyncAppDelegate.m */,
+				649A3A71151696C700DE0797 /* RKEntityViewController.h */,
+				649A3A72151696C700DE0797 /* RKEntityViewController.m */,
 				28D7ACF60DDB3853001CB0EB /* RKHumanViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* RKHumanViewController.m */,
+				649A3A831516A33C00DE0797 /* RKCatViewController.h */,
+				649A3A841516A33C00DE0797 /* RKCatViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -249,8 +255,6 @@
 				25F2A2D813240CEC00A33DE4 /* RKSeedDatabase.sqlite */,
 				3F3CE40C125B9B450083FDCB /* Default.png */,
 				3F3CE40D125B9B450083FDCB /* Default@2x.png */,
-				3F3CE3FA125B9A6E0083FDCB /* listbg.png */,
-				3F3CE3FB125B9A6E0083FDCB /* listbg@2x.png */,
 				8D1107310486CEB800E47090 /* RKSync-Info.plist */,
 			);
 			path = Resources;
@@ -390,8 +394,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F3CE3FC125B9A6E0083FDCB /* listbg.png in Resources */,
-				3F3CE3FD125B9A6E0083FDCB /* listbg@2x.png in Resources */,
 				3F3CE410125B9B450083FDCB /* Default.png in Resources */,
 				3F3CE411125B9B450083FDCB /* Default@2x.png in Resources */,
 				25F2A2D913240CEC00A33DE4 /* RKSeedDatabase.sqlite in Resources */,
@@ -404,8 +406,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25F2A1791322D59400A33DE4 /* listbg.png in Resources */,
-				25F2A17A1322D59400A33DE4 /* listbg@2x.png in Resources */,
 				25F2A17D1322D59400A33DE4 /* Default.png in Resources */,
 				25F2A17E1322D59400A33DE4 /* Default@2x.png in Resources */,
 				646A81BB1512A4890025238B /* RestKitResources.bundle in Resources */,
@@ -426,6 +426,8 @@
 				646A81AD1512999C0025238B /* Data Model.xcdatamodel in Sources */,
 				646A81AE1512999C0025238B /* RKCat.m in Sources */,
 				646A81AF1512999C0025238B /* RKHuman.m in Sources */,
+				649A3A73151696C700DE0797 /* RKEntityViewController.m in Sources */,
+				649A3A851516A33C00DE0797 /* RKCatViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +441,8 @@
 				25F2A1801322D59400A33DE4 /* main.m in Sources */,
 				25F2A1811322D59400A33DE4 /* RKSyncAppDelegate.m in Sources */,
 				25F2A1821322D59400A33DE4 /* RKHumanViewController.m in Sources */,
+				649A3A74151696C700DE0797 /* RKEntityViewController.m in Sources */,
+				649A3A861516B6D400DE0797 /* RKCatViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,6 +6,11 @@ require 'json'
 require 'sinatra/activerecord'
 
 class Human < ActiveRecord::Base
+  has_many :cats, :class_name => "Cat", :foreign_key => "owner_id"
+end
+
+class Cat < ActiveRecord::Base
+  belongs_to :owner, :class_name => "Human", :foreign_key => "owner_id"
 end
 
 class RKSyncCoreDataServer < Sinatra::Base
@@ -29,13 +34,13 @@ class RKSyncCoreDataServer < Sinatra::Base
   # GET /humans
   get '/humans' do
     @humans = Human.all
-    {"humans" => @humans}.to_json
+    {"humans" => @humans}.to_json(:include => [:cats])
   end
 
   # GET /humans/1  
   get '/humans/:id' do
     @human = Human.find(params[:id]) rescue nil
-    @human.to_json if @human
+    @human.to_json(:include => [:cats]) if @human
   end
   
   # POST /humans.json 
@@ -44,10 +49,14 @@ class RKSyncCoreDataServer < Sinatra::Base
     begin
       @human = Human.create(params['human'])
       @human.save
+      rand(5).times do |x|
+        c = @human.cats.create!({:name => "#{@human.name}'s Cat #{x+1}"})
+      end
       status 201
     rescue Exception => e
       status 500
     end
+    @human.to_json(:include => [:cats])
   end
   
   # DELETE /humans/1.json 
