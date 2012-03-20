@@ -31,6 +31,7 @@
 @dynamic age;
 @dynamic createdAt;
 @dynamic updatedAt;
+@dynamic syncedAt;
 @dynamic favoriteColors;
 
 @dynamic favoriteCat;

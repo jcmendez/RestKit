@@ -15,6 +15,7 @@
 @protocol RKSyncManagerDelegate 
 @optional
 - (void) syncManagerFinishedSync: (RKManagedObjectSyncManager *) manager;
+- (void) syncManagerFailedSync: (RKManagedObjectSyncManager *) manager;
 @end
 
 
@@ -40,6 +41,9 @@
 - (void) setSyncUpdateStampAttribute: (NSString *) theSyncUpdateStampAttribute forEntity:(NSEntityDescription *) theEntity;
 - (NSString *) syncUpdateStampAttributeForEntity:(NSEntityDescription *) theEntity;
 
+- (void) setSyncLastSyncStampAttribute: (NSString *) theSyncLastSyncStampAttribute forEntity:(NSEntityDescription *) theEntity;
+- (NSString *) syncLastSyncStampAttributeForEntity:(NSEntityDescription *) theEntity;
+
 - (void) setObjectMapping:(RKManagedObjectMapping *)theMapping forEntity:(NSEntityDescription *) theEntity;
 - (RKManagedObjectMapping *) objectMappingForEntity:(NSEntityDescription *) theEntity;
 
@@ -49,5 +53,8 @@
 - (void) syncObjectsForEntity:(NSEntityDescription *)theEntity delegate:(NSObject<RKSyncManagerDelegate> *)delegate;
 
 @property (strong,nonatomic) NSObject<RKSyncManagerDelegate> *delegate;
+@property (assign,atomic) BOOL syncing;
+@property (assign,atomic) BOOL deleteLocalsBeforeSync;
+@property (strong,nonatomic) NSEntityDescription *mainEntitySyncing;
 @end
 

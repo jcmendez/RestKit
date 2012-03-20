@@ -34,6 +34,7 @@
 @dynamic railsID;
 @dynamic sex;
 @dynamic updatedAt;
+@dynamic syncedAt;
 
 @dynamic human;
 

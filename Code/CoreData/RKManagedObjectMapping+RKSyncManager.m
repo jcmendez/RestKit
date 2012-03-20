@@ -43,6 +43,13 @@
                                                                     forEntity:[self entity]];  
 }
 
+- (void)setSyncLastSyncStampAttribute:(NSString *)theSyncLastSyncStampAttribute {
+  [[RKManagedObjectSyncManager sharedSyncManager] setObjectMapping: self 
+                                                         forEntity:[self entity]];
+  [[RKManagedObjectSyncManager sharedSyncManager] setSyncLastSyncStampAttribute: theSyncLastSyncStampAttribute 
+                                                                    forEntity:[self entity]];  
+}
+
 - (NSUInteger)syncModeForEntity {
   return [[RKManagedObjectSyncManager sharedSyncManager] syncModeForEntity:[self entity]];
 }
@@ -57,6 +64,10 @@
 
 - (NSString *)syncUpdateStampAttribute {
   return [[RKManagedObjectSyncManager sharedSyncManager] syncUpdateStampAttributeForEntity:[self entity]];  
+}
+
+- (NSString *)syncLastSyncStampAttribute {
+  return [[RKManagedObjectSyncManager sharedSyncManager] syncLastSyncStampAttributeForEntity:[self entity]];  
 }
 
 - (NSString *)syncBackendCreateStampAttribute {

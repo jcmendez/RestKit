@@ -6,7 +6,7 @@ require 'json'
 require 'sinatra/activerecord'
 
 class Human < ActiveRecord::Base
-  has_many :cats, :class_name => "Cat", :foreign_key => "owner_id"
+  has_many :cats, :class_name => "Cat", :dependent => :destroy, :foreign_key => "owner_id"
 end
 
 class Cat < ActiveRecord::Base

@@ -51,12 +51,13 @@
      @"updated_at", @"updatedAt",
      @"name", @"name",
      nil];
-    // The next four statements instruct the sync manager to sync the RKHumans entity, and instruct it to use the
+    // The next five statements instruct the sync manager to sync the RKCats entity, and instruct it to use the
     // fields updatedAt and createdAt to compare instances.  We want full two way sync 
-    catMapping.syncModeForEntity = RKSyncModePullFromServer;
+    catMapping.syncModeForEntity = RKSyncModeTwoWay;
     catMapping.syncResourcePathForEntity = @"/cats";
     catMapping.syncUpdateStampAttribute = @"updatedAt";
     catMapping.syncCreateStampAttribute = @"createdAt";
+    catMapping.syncLastSyncStampAttribute = @"syncedAt";
 
     
     /*!
@@ -78,13 +79,14 @@
      nil];
     [humanMapping mapRelationship:@"cats" withMapping:catMapping];
   
-    // The next four statements instruct the sync manager to sync the RKHumans entity, and instruct it to use the
+    // The next five statements instruct the sync manager to sync the RKHumans entity, and instruct it to use the
     // fields updatedAt and createdAt to compare instances.  We want full two way sync 
-    humanMapping.syncModeForEntity = RKSyncModePullFromServer;
+    humanMapping.syncModeForEntity = RKSyncModeTwoWay;
     humanMapping.syncResourcePathForEntity = @"/humans";
     humanMapping.syncUpdateStampAttribute = @"updatedAt";
     humanMapping.syncCreateStampAttribute = @"createdAt";
-  NSLog(@"Looking at fields %@, %@ for sync", humanMapping.syncBackendCreateStampAttribute, humanMapping.syncBackendUpdateStampAttribute);
+    humanMapping.syncLastSyncStampAttribute = @"syncedAt";
+    NSLog(@"Looking at fields %@, %@ for sync", humanMapping.syncBackendCreateStampAttribute, humanMapping.syncBackendUpdateStampAttribute);
 
     
     // Update date format so that we can parse Twitter dates properly

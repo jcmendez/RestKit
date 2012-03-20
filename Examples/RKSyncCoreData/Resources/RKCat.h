@@ -35,6 +35,7 @@
 @property (nonatomic, retain) NSNumber* railsID;
 @property (nonatomic, retain) NSString* sex;
 @property (nonatomic, retain) NSDate* updatedAt;
+@property (nonatomic, retain) NSDate* syncedAt;
 
 @property (nonatomic, retain) RKHuman * human;
 

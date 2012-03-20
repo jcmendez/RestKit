@@ -698,14 +698,14 @@
 		49D275AF14C9F3020090845D /* RKISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D275AC14C9F3020090845D /* RKISO8601DateFormatter.m */; };
 		49D275B014C9F3020090845D /* RKISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D275AC14C9F3020090845D /* RKISO8601DateFormatter.m */; };
 		6494E96B1514316100496B1D /* RKManagedObjectSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9691514316100496B1D /* RKManagedObjectSyncManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6494E96C1514316100496B1D /* RKManagedObjectSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9691514316100496B1D /* RKManagedObjectSyncManager.h */; };
+		6494E96C1514316100496B1D /* RKManagedObjectSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9691514316100496B1D /* RKManagedObjectSyncManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6494E96D1514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
 		6494E96E1514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
 		6494E96F1514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
 		6494E9701514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
 		6494E9711514316100496B1D /* RKManagedObjectSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E96A1514316100496B1D /* RKManagedObjectSyncManager.m */; };
 		6494E9751514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9731514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6494E9761514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9731514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h */; };
+		6494E9761514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6494E9731514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6494E9771514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */; };
 		6494E9781514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */; };
 		6494E9791514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6494E9741514363D00496B1D /* RKManagedObjectMapping+RKSyncManager.m */; };

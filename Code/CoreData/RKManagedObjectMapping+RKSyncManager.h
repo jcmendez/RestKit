@@ -51,6 +51,7 @@ enum {
 @property (strong,nonatomic) NSString *syncResourcePathForEntity;
 @property (strong,nonatomic) NSString *syncCreateStampAttribute;
 @property (strong,nonatomic) NSString *syncUpdateStampAttribute;
+@property (strong,nonatomic) NSString *syncLastSyncStampAttribute;
 
 @property (readonly) NSString* syncBackendCreateStampAttribute;
 @property (readonly) NSString* syncBackendUpdateStampAttribute;

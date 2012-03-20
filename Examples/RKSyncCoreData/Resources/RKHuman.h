@@ -31,6 +31,7 @@
 @property (nonatomic, retain) NSNumber *age;
 @property (nonatomic, retain) NSDate *createdAt;
 @property (nonatomic, retain) NSDate *updatedAt;
+@property (nonatomic, retain) NSDate *syncedAt;
 @property (nonatomic, retain) NSArray *favoriteColors;
 
 @property (nonatomic, retain) NSSet *cats;
